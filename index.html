@@ -398,12 +398,11 @@ function showPage(number) {
 }
 
 function start() {
-
   const music = document.getElementById("music");
 
-  music.play().catch(function(error) {
-    console.log("Music tidak dapat dimainkan:", error);
-  });
+  music.volume = 1;
+
+  music.play();
 
   page = 2;
   showPage(page);
