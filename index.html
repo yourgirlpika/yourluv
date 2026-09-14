@@ -1,0 +1,434 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>For You ♡</title>
+
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600&family=Poppins:wght@300;400;500&display=swap');
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  min-height: 100vh;
+  overflow: hidden;
+  background:
+    radial-gradient(circle at 20% 20%, rgba(255,255,255,.12), transparent 25%),
+    radial-gradient(circle at 80% 80%, rgba(255,180,190,.08), transparent 30%),
+    linear-gradient(135deg, #3d0718, #6d1730, #3c0617);
+  color: white;
+  font-family: 'Poppins', sans-serif;
+}
+
+.heart {
+  position: fixed;
+  color: rgba(255,255,255,.25);
+  animation: float 7s linear infinite;
+  pointer-events: none;
+}
+
+@keyframes float {
+  from {
+    transform: translateY(110vh) rotate(0deg);
+    opacity: 0;
+  }
+
+  20% {
+    opacity: 1;
+  }
+
+  to {
+    transform: translateY(-10vh) rotate(360deg);
+    opacity: 0;
+  }
+}
+
+.page {
+  position: absolute;
+  inset: 0;
+  display: none;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  padding: 25px;
+  text-align: center;
+}
+
+.page.active {
+  display: flex;
+  animation: pageIn .8s ease;
+}
+
+@keyframes pageIn {
+  from {
+    opacity: 0;
+    transform: scale(.96);
+  }
+
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+.intro {
+  width: 100%;
+  max-width: 360px;
+}
+
+.small-text {
+  font-size: 12px;
+  letter-spacing: 4px;
+  opacity: .7;
+  margin-bottom: 15px;
+}
+
+.loading-title {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 38px;
+  margin-bottom: 28px;
+}
+
+.loading-box {
+  width: 100%;
+  height: 3px;
+  background: rgba(255,255,255,.18);
+  border-radius: 20px;
+  overflow: hidden;
+}
+
+.loading-bar {
+  height: 100%;
+  width: 45%;
+  background: white;
+  border-radius: 20px;
+  animation: loading 2s infinite ease-in-out;
+}
+
+@keyframes loading {
+  0% {
+    transform: translateX(-120%);
+  }
+
+  100% {
+    transform: translateX(320%);
+  }
+}
+
+.music-btn,
+.next-btn {
+  margin-top: 30px;
+  padding: 13px 27px;
+  border: 1px solid rgba(255,255,255,.45);
+  border-radius: 50px;
+  background: rgba(255,255,255,.12);
+  backdrop-filter: blur(10px);
+  color: white;
+  font-family: 'Poppins', sans-serif;
+  font-size: 13px;
+  letter-spacing: 1px;
+  cursor: pointer;
+  transition: .3s;
+}
+
+.music-btn:hover,
+.next-btn:hover {
+  background: rgba(255,255,255,.22);
+  transform: translateY(-2px);
+}
+
+.sticker {
+  width: 135px;
+  height: 135px;
+  object-fit: contain;
+  margin-bottom: 20px;
+  filter: drop-shadow(0 12px 18px rgba(0,0,0,.25));
+  animation: stickerFloat 3s ease-in-out infinite;
+}
+
+@keyframes stickerFloat {
+  0%,100% {
+    transform: translateY(0) rotate(-2deg);
+  }
+
+  50% {
+    transform: translateY(-8px) rotate(2deg);
+  }
+}
+
+.letter {
+  position: relative;
+  width: 100%;
+  max-width: 420px;
+  padding: 30px 27px;
+  background: rgba(255,245,246,.94);
+  color: #521125;
+  border-radius: 5px;
+  box-shadow:
+    0 20px 50px rgba(0,0,0,.28),
+    0 0 0 1px rgba(255,255,255,.15);
+  text-align: left;
+}
+
+.letter::before {
+  content: "♡";
+  position: absolute;
+  top: 12px;
+  right: 17px;
+  font-size: 18px;
+  color: #9c536b;
+}
+
+.letter h2 {
+  margin: 0 0 15px;
+  text-align: center;
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 32px;
+  font-weight: 600;
+}
+
+.letter p {
+  margin: 10px 0;
+  font-size: 14px;
+  line-height: 1.9;
+}
+
+.signature {
+  text-align: right;
+  margin-top: 20px !important;
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 21px !important;
+}
+
+.nav {
+  display: flex;
+  gap: 10px;
+}
+
+.back-btn {
+  margin-top: 30px;
+  padding: 13px 20px;
+  border: none;
+  background: transparent;
+  color: rgba(255,255,255,.65);
+  font-size: 12px;
+  cursor: pointer;
+}
+
+.page-number {
+  position: absolute;
+  bottom: 22px;
+  font-size: 10px;
+  letter-spacing: 3px;
+  opacity: .4;
+}
+</style>
+</head>
+
+<body>
+
+<div class="heart" style="left:10%; animation-delay:0s;">♡</div>
+<div class="heart" style="left:25%; animation-delay:2s;">♡</div>
+<div class="heart" style="left:45%; animation-delay:4s;">♡</div>
+<div class="heart" style="left:70%; animation-delay:1s;">♡</div>
+<div class="heart" style="left:88%; animation-delay:3s;">♡</div>
+
+
+<!-- PAGE 1 -->
+
+<section class="page active" id="page1">
+
+  <div class="intro">
+
+    <div class="small-text">
+      SOMETHING FOR YOU
+    </div>
+
+    <div class="loading-title">
+      Just a little surprise ♡
+    </div>
+
+    <div class="loading-box">
+      <div class="loading-bar"></div>
+    </div>
+
+    <button class="music-btn" onclick="start()">
+      ♫ &nbsp; Open with music
+    </button>
+
+  </div>
+
+</section>
+
+
+<!-- PAGE 2 -->
+
+<section class="page" id="page2">
+
+  <img src="assets/IMG_6642.gif" class="sticker">
+
+  <div class="letter">
+
+    <h2>dear you ♡</h2>
+
+    <p>
+      halu kamu, kau dah ada mood belum?
+      belum eh? yaudah aku harap kau tak badmood
+      lama-lama okeii?
+      semangat luv, jangan sedih-sedih tau,
+      be happy o ❤️
+    </p>
+
+    <p>
+      ga perlu nunggu kamu punya segalanya,
+      atu bakal terus nemenin kamu sampai punya
+      segalanya. so take your time,
+      aku selalu disini bersamamu ❤️
+    </p>
+
+    <p class="signature">
+      with love ♡
+    </p>
+
+  </div>
+
+  <div class="nav">
+    <button class="back-btn" onclick="back()">← Back</button>
+    <button class="next-btn" onclick="next()">Next ♡</button>
+  </div>
+
+  <div class="page-number">02 / 04</div>
+
+</section>
+
+
+<!-- PAGE 3 -->
+
+<section class="page" id="page3">
+
+  <img src="assets/IMG_6642.gif" class="sticker">
+
+  <div class="letter">
+
+    <h2>A Little Note ♡</h2>
+
+    <p>
+      Aku jatuh cinta pada segala keindahan
+      yang diciptakan Tuhan.
+      Bunga, senja, kupu-kupu
+      dan Kamu hehe 😛💕
+    </p>
+
+    <p>
+      I love everything about you 💕.
+    </p>
+
+    <p class="signature">
+      always ♡
+    </p>
+
+  </div>
+
+  <div class="nav">
+    <button class="back-btn" onclick="back()">← Back</button>
+    <button class="next-btn" onclick="next()">Next ♡</button>
+  </div>
+
+  <div class="page-number">03 / 04</div>
+
+</section>
+
+
+<!-- PAGE 4 -->
+
+<section class="page" id="page4">
+
+  <img src="assets/sticker3.png" class="sticker">
+
+  <div class="letter">
+
+    <h2>One Last Thing ♡</h2>
+
+    <p>
+      you will always be my favorite,
+      always 💕
+    </p>
+
+    <p>
+      Thank you for being someone special. ♡
+    </p>
+
+    <p class="signature">
+      end of my little letter ♡
+    </p>
+
+  </div>
+
+  <div class="nav">
+    <button class="back-btn" onclick="back()">← Back</button>
+  </div>
+
+  <div class="page-number">04 / 04</div>
+
+</section>
+
+
+<!-- LAGU -->
+
+<audio id="music" loop>
+  <source src="assets/loveyou.mp3" type="audio/mpeg">
+</audio>
+
+
+<script>
+
+let page = 1;
+
+function showPage(number) {
+
+  document.querySelectorAll(".page").forEach(function(p) {
+    p.classList.remove("active");
+  });
+
+  document.getElementById("page" + number).classList.add("active");
+}
+
+function start() {
+
+  const music = document.getElementById("music");
+
+  music.play().catch(function(error) {
+    console.log("Music tidak dapat dimainkan:", error);
+  });
+
+  page = 2;
+  showPage(page);
+}
+
+function next() {
+
+  if (page < 4) {
+    page++;
+    showPage(page);
+  }
+
+}
+
+function back() {
+
+  if (page > 1) {
+    page--;
+    showPage(page);
+  }
+
+}
+
+</script>
+
+</body>
+</html>
